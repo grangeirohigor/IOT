@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <rect width="192" height="192" fill="#0f172a"/>
+  <rect x="23" y="23" width="146" height="146" rx="20" fill="#e52525"/>
+  <text x="96" y="117" fill="#fff" font-family="Arial, Helvetica, sans-serif"
+        font-size="57" font-weight="700" text-anchor="middle">IOT</text>
+</svg>

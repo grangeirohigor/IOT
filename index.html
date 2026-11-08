@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f172a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Drogas de IOT</title>
+<style>
+  :root{
+    --bg:#0f172a; --card:#1e293b; --line:#334155; --txt:#f1f5f9; --mut:#94a3b8;
+    --fen:#3b82f6; --mid:#a855f7; --eto:#f97316; --suc:#ef4444; --in:#facc15;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+  body{max-width:480px;margin:0 auto;padding:0 12px 28px}
+  header{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;border-bottom:1px solid var(--line)}
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  h1{font-size:15px;letter-spacing:.08em;color:var(--mut);font-weight:700}
+  .gear{background:none;border:1px solid var(--line);color:var(--mut);border-radius:8px;padding:6px 10px;font-size:13px}
+  .weight{display:flex;align-items:center;gap:8px}
+  .weight button{width:52px;height:56px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:26px;font-weight:600}
+  .wbox{flex:1;position:relative}
+  .wbox input{width:100%;height:56px;border-radius:12px;border:2px solid var(--in);background:#111827;color:var(--in);font-size:32px;font-weight:800;text-align:center;padding-right:34px}
+  .wbox input::-webkit-outer-spin-button,.wbox input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .wbox input{-moz-appearance:textfield}
+  .wbox span{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:14px;font-weight:600}
+  .warn{color:#fca5a5;font-size:12px;text-align:center;margin-top:6px;min-height:0}
+  .card{background:var(--card);border-radius:14px;margin-top:12px;overflow:hidden;border-left:6px solid var(--c)}
+  .ch{display:flex;justify-content:space-between;align-items:baseline;padding:10px 12px 4px}
+  .ch b{font-size:18px}
+  .ch small{color:var(--mut);font-size:12px}
+  .row{display:grid;grid-template-columns:70px 1fr 1fr 44px;align-items:center;padding:6px 12px}
+  .row .l{color:var(--mut);font-size:13px}
+  .row .v{text-align:center;font-weight:700;font-size:20px}
+  .row .u{color:var(--mut);font-size:13px;text-align:right}
+  .row.vol{background:rgba(255,255,255,.04)}
+  .row.vol .v{font-size:28px;color:var(--c)}
+  .row.hd{padding:0 12px}
+  .row.hd .v{font-size:11px;color:var(--mut);font-weight:600;letter-spacing:.06em}
+  .ob{color:var(--mut);font-size:12px;padding:6px 12px 10px;font-style:italic}
+  .foot{color:var(--mut);font-size:12px;margin-top:16px;line-height:1.45}
+  /* settings */
+  #cfg{display:none;margin-top:12px;background:var(--card);border-radius:14px;padding:12px}
+  #cfg.on{display:block}
+  #cfg h2{font-size:14px;margin-bottom:8px}
+  .p{border-top:1px solid var(--line);padding:8px 0}
+  .p b{display:block;font-size:14px;margin-bottom:6px}
+  .pg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .pg label{font-size:10px;color:var(--mut);display:flex;flex-direction:column;gap:3px}
+  .pg input{width:100%;padding:7px 4px;border-radius:8px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:15px;text-align:center}
+  .btns{display:flex;gap:8px;margin-top:10px}
+  .btns button{flex:1;padding:10px;border-radius:10px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:14px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><h1>DROGAS DE IOT</h1><button class="gear" id="gear">⚙ Parâmetros</button></div>
+  <div class="weight">
+    <button id="minus" aria-label="menos">−</button>
+    <div class="wbox"><input id="w" type="number" inputmode="decimal" min="3" max="250" step="1" placeholder="Peso"><span>kg</span></div>
+    <button id="plus" aria-label="mais">+</button>
+  </div>
+  <div class="warn" id="warn"></div>
+</header>
+
+<section id="cfg">
+  <h2>Parâmetros (salvos neste aparelho)</h2>
+  <div id="cfgList"></div>
+  <div class="btns"><button id="reset">Restaurar padrão</button><button id="close">Fechar</button></div>
+</section>
+
+<main id="cards"></main>
+
+<p class="foot">Obeso: fentanil, midazolam e etomidato pelo peso ideal; succinilcolina pelo peso real.<br>
+Concentrações padrão: fentanil 50 mcg/mL · midazolam 5 mg/mL (se diluir 15 mg em 15 mL, usar 1) · etomidato 2 mg/mL · succinilcolina 100 mg em 10 mL = 10 mg/mL.<br>
+Ferramenta de apoio; conferir dose antes de administrar.</p>
+
+<script>
+const DEFAULT = [
+  {id:"fen", nome:"Fentanil",       min:2,   max:3,   un:"mcg", conc:50, teto:null, obs:"Fazer 3 min antes da indução", cor:"var(--fen)"},
+  {id:"mid", nome:"Midazolam",      min:0.1, max:0.3, un:"mg",  conc:5,  teto:null, obs:"Instável/idoso: usar dose mínima", cor:"var(--mid)"},
+  {id:"eto", nome:"Etomidato",      min:0.2, max:0.3, un:"mg",  conc:2,  teto:null, obs:"Sem analgesia · mioclonia", cor:"var(--eto)"},
+  {id:"suc", nome:"Succinilcolina", min:1,   max:1.5, un:"mg",  conc:10, teto:150,  obs:"CI: hiperK, HM, imobilidade >72 h", cor:"var(--suc)"}
+];
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+let P = store.get("iot_params") || JSON.parse(JSON.stringify(DEFAULT));
+const $ = s => document.querySelector(s);
+const w = $("#w");
+const fmt = n => (Math.round(n*10)/10).toLocaleString("pt-BR",{maximumFractionDigits:1});
+const r1 = n => Math.round(n*10)/10;
+
+function dose(kg, perKg, teto){ let d = r1(kg*perKg); return (teto ? Math.min(d, teto) : d); }
+
+function render(){
+  const kg = parseFloat(String(w.value).replace(",", "."));
+  const ok = kg >= 3 && kg <= 250;
+  $("#warn").textContent = (w.value !== "" && !ok) ? "Peso fora da faixa (3–250 kg)" : "";
+  $("#cards").innerHTML = P.map(d => {
+    const dm = ok ? dose(kg,d.min,d.teto) : null, dM = ok ? dose(kg,d.max,d.teto) : null;
+    const v = x => x==null ? "—" : fmt(x);
+    return `<div class="card" style="--c:${d.cor}">
+      <div class="ch"><b>${d.nome}</b><small>${fmt(d.min)}–${fmt(d.max)} ${d.un}/kg · ${fmt(d.conc)} ${d.un}/mL</small></div>
+      <div class="row hd"><span></span><span class="v">MÍN</span><span class="v">MÁX</span><span></span></div>
+      <div class="row"><span class="l">Dose</span><span class="v">${v(dm)}</span><span class="v">${v(dM)}</span><span class="u">${d.un}</span></div>
+      <div class="row vol"><span class="l">Volume</span><span class="v">${v(ok?r1(dm/d.conc):null)}</span><span class="v">${v(ok?r1(dM/d.conc):null)}</span><span class="u">mL</span></div>
+      <div class="ob">${d.obs}${d.teto ? ` · teto ${fmt(d.teto)} ${d.un}` : ""}</div>
+    </div>`;
+  }).join("");
+  if (ok) store.set("iot_last_kg", kg);
+}
+
+function renderCfg(){
+  $("#cfgList").innerHTML = P.map((d,i) => `<div class="p"><b>${d.nome}</b><div class="pg">
+    <label>Mín/kg<input data-i="${i}" data-k="min" type="number" inputmode="decimal" step="any" value="${d.min}"></label>
+    <label>Máx/kg<input data-i="${i}" data-k="max" type="number" inputmode="decimal" step="any" value="${d.max}"></label>
+    <label>${d.un}/mL<input data-i="${i}" data-k="conc" type="number" inputmode="decimal" step="any" value="${d.conc}"></label>
+    <label>Teto ${d.un}<input data-i="${i}" data-k="teto" type="number" inputmode="decimal" step="any" value="${d.teto ?? ""}" placeholder="—"></label>
+  </div></div>`).join("");
+}
+$("#cfgList").addEventListener("input", e => {
+  const t = e.target; if (!t.dataset.k) return;
+  const val = parseFloat(String(t.value).replace(",", "."));
+  const k = t.dataset.k, d = P[+t.dataset.i];
+  if (k === "teto") d.teto = (t.value === "" || !(val > 0)) ? null : val;
+  else if (val > 0) d[k] = val; else return;
+  store.set("iot_params", P); render();
+});
+$("#gear").onclick = () => { renderCfg(); $("#cfg").classList.toggle("on"); };
+$("#close").onclick = () => $("#cfg").classList.remove("on");
+$("#reset").onclick = () => { P = JSON.parse(JSON.stringify(DEFAULT)); store.set("iot_params", P); renderCfg(); render(); };
+
+const step = n => { const kg = parseFloat(String(w.value).replace(",", ".")) || 0; w.value = Math.max(3, Math.min(250, Math.round(kg + n))); render(); };
+$("#minus").onclick = () => step(-1);
+$("#plus").onclick  = () => step(+1);
+w.addEventListener("input", render);
+w.addEventListener("focus", () => w.select());
+
+const last = store.get("iot_last_kg");
+if (last) w.value = last;
+render();
+
+// Offline (só funciona quando hospedado como PWA; ignorado em ambientes que bloqueiam service worker)
+try {
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || ["localhost","127.0.0.1"].includes(location.hostname))) {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  }
+} catch(e) {}
+</script>
+</body>
+</html>
