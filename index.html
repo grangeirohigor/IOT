@@ -12,36 +12,57 @@
   :root{
     --bg:#0f172a; --card:#1e293b; --line:#334155; --txt:#f1f5f9; --mut:#94a3b8;
     --fen:#3b82f6; --mid:#a855f7; --eto:#f97316; --cet:#14b8a6; --suc:#ef4444; --roc:#eab308; --in:#facc15;
+    --nav:64px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
-  body{max-width:480px;margin:0 auto;padding:0 12px 28px}
-  header{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 10px;border-bottom:1px solid var(--line)}
+  body{max-width:480px;margin:0 auto;padding:0 12px calc(var(--nav) + 24px + env(safe-area-inset-bottom))}
+  input[type=number]{-moz-appearance:textfield}
+  input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .hide{display:none!important}
+
+  /* ---------- cabeçalho + paciente ---------- */
+  header{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;border-bottom:1px solid var(--line)}
   .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-  h1{font-size:15px;letter-spacing:.08em;color:var(--mut);font-weight:700}
+  h1{font-size:14px;letter-spacing:.08em;color:var(--mut);font-weight:700}
   .gear{background:none;border:1px solid var(--line);color:var(--mut);border-radius:8px;padding:6px 10px;font-size:13px}
-  .weight{display:flex;align-items:center;gap:8px}
-  .weight button{width:52px;height:56px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:26px;font-weight:600}
-  .wbox{flex:1;position:relative}
-  .wbox input{width:100%;height:56px;border-radius:12px;border:2px solid var(--in);background:#111827;color:var(--in);font-size:32px;font-weight:800;text-align:center;padding-right:34px;-moz-appearance:textfield}
-  .wbox input::-webkit-outer-spin-button,.wbox input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-  .wbox span{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:14px;font-weight:600}
-  .warn{color:#fca5a5;font-size:12px;text-align:center;margin-top:6px}
-  /* peso ideal */
-  .ibw{display:flex;align-items:center;gap:8px;margin-top:8px}
-  .tg{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--mut);white-space:nowrap}
-  .tg input{width:18px;height:18px;accent-color:var(--in)}
+  .pt{display:flex;align-items:center;gap:6px}
+  .pt .st{width:44px;height:50px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:24px;font-weight:600;flex:none}
+  .wbox{flex:1;position:relative;min-width:0}
+  .wbox input{width:100%;height:50px;border-radius:12px;border:2px solid var(--in);background:#111827;color:var(--in);font-size:28px;font-weight:800;text-align:center;padding-right:30px}
+  .wbox span{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:13px;font-weight:600}
+  .ptsum{flex:none;height:50px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:13px;font-weight:600;padding:0 10px;line-height:1.25;text-align:center;min-width:78px}
+  .ptsum small{display:block;color:var(--mut);font-weight:500;font-size:11px}
+  .ptinfo{font-size:12px;color:var(--mut);text-align:center;margin-top:6px;min-height:16px}
+  .ptinfo.warn{color:#fca5a5}
+  .stale{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;padding:8px 10px;border-radius:10px;background:rgba(250,204,21,.16);color:#fde047;font-size:13px;font-weight:700}
+  .stale button{flex:none;border:0;border-radius:8px;padding:7px 10px;background:var(--in);color:#111;font-weight:800;font-size:13px}
+  #pp{display:none;margin-top:8px;padding:10px;border-radius:12px;background:var(--card)}
+  #pp.on{display:block}
+  .pprow{display:flex;align-items:center;gap:8px}
+  .pprow + .pprow{margin-top:8px}
+  .pprow > span{font-size:12px;color:var(--mut);width:46px;flex:none}
   .sx{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-  .sx button{background:#0b1220;color:var(--mut);border:0;padding:7px 11px;font-size:14px;font-weight:700}
+  .sx button{background:#0b1220;color:var(--mut);border:0;padding:8px 16px;font-size:15px;font-weight:700}
   .sx button.on{background:var(--in);color:#111}
   .alt{position:relative;flex:1}
-  .alt input{width:100%;padding:7px 30px 7px 8px;border-radius:8px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:15px;text-align:center;-moz-appearance:textfield}
-  .alt input::-webkit-outer-spin-button,.alt input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .alt input{width:100%;padding:8px 32px 8px 8px;border-radius:8px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:16px;text-align:center}
   .alt span{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:12px}
-  .ibwinfo{font-size:12px;color:var(--in);text-align:center;margin-top:6px}
-  .ibwrow{display:none}
-  .ibwrow.on{display:flex}
-  /* cards */
+  .newpt{width:100%;margin-top:10px;padding:10px;border-radius:10px;border:1px solid #7f1d1d;background:rgba(239,68,68,.12);color:#fca5a5;font-size:14px;font-weight:800}
+  .newpt.arm{background:#dc2626;color:#fff;border-color:#dc2626}
+
+  /* ---------- navegação inferior ---------- */
+  nav{position:fixed;left:0;right:0;bottom:0;z-index:10;background:#0b1220;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+  nav .in{max-width:480px;margin:0 auto;display:flex}
+  nav button{flex:1;height:var(--nav);border:0;background:none;color:var(--mut);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:700;letter-spacing:.04em}
+  nav button b{font-size:17px;letter-spacing:.02em}
+  nav button.on{color:var(--in)}
+  nav button.on b{color:var(--txt)}
+
+  /* ---------- IOT ---------- */
+  .opt{display:flex;align-items:center;gap:8px;margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--card);font-size:14px}
+  .opt input{width:20px;height:20px;accent-color:var(--in);flex:none}
+  .opt small{display:block;color:var(--mut);font-size:12px;margin-top:2px}
   .sec{color:var(--mut);font-size:11px;letter-spacing:.1em;font-weight:700;margin:16px 2px -4px}
   .card{background:var(--card);border-radius:14px;margin-top:12px;overflow:hidden;border-left:6px solid var(--c)}
   .ch{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:10px 12px 4px}
@@ -58,12 +79,8 @@
   .row.hd .v{font-size:11px;color:var(--mut);font-weight:600;letter-spacing:.06em}
   .ob{color:var(--mut);font-size:12px;padding:6px 12px 10px;font-style:italic}
   .foot{color:var(--mut);font-size:12px;margin-top:16px;line-height:1.45}
-  /* abas */
-  .tabs{display:flex;gap:6px;margin-bottom:10px}
-  .tabs button{flex:1;padding:9px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--mut);font-size:14px;font-weight:700;letter-spacing:.04em}
-  .tabs button.on{background:var(--txt);color:var(--bg);border-color:var(--txt)}
-  .hide{display:none!important}
-  /* BIC */
+
+  /* ---------- BIC ---------- */
   .bsel{width:100%;margin-top:12px;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:18px;font-weight:700}
   .box{background:var(--card);border-radius:14px;margin-top:12px;padding:12px}
   .dil{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -89,7 +106,48 @@
   .b-sup{background:rgba(239,68,68,.2);color:#fca5a5}
   .rng{margin-top:10px;font-size:13px;color:var(--mut);line-height:1.5}
   .rng b{color:var(--txt)}
-  /* settings */
+
+
+  /* ---------- GASO ---------- */
+  .gin{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .gin label{font-size:11px;color:var(--mut);display:flex;flex-direction:column;justify-content:flex-end;gap:4px}
+  .gin.g4{grid-template-columns:repeat(4,1fr);gap:6px}
+  .gin.g4 input{font-size:17px}
+  .gin label i{font-style:normal;color:#64748b;font-size:10px}
+  .gin input{width:100%;padding:10px 4px;border-radius:10px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:19px;font-weight:700;text-align:center}
+  .gin input.req{border-color:var(--in)}
+  .gin input.bad{border-color:#ef4444;color:#fca5a5}
+  .gsub{font-size:11px;color:var(--mut);letter-spacing:.08em;font-weight:700;margin:12px 0 6px}
+  .ghco3{margin-top:10px;font-size:13px;color:var(--mut)}
+  .ghco3 b{color:var(--txt);font-size:16px}
+  .gclr{margin-top:10px;width:100%;padding:8px;border-radius:10px;border:1px solid var(--line);background:#0b1220;color:var(--mut);font-size:13px}
+  .ghead{padding:10px 12px;border-radius:12px;font-weight:800;font-size:15px;line-height:1.35}
+  .g-ac{background:rgba(239,68,68,.18);color:#fca5a5}
+  .g-al{background:rgba(59,130,246,.2);color:#93c5fd}
+  .g-nl{background:rgba(34,197,94,.15);color:#86efac}
+  .gl{margin-top:10px}
+  .gi{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:9px 2px;border-bottom:1px solid var(--line)}
+  .gi:last-child{border-bottom:0}
+  .gi .k{font-size:13px;color:var(--mut)}
+  .gi .v{font-size:15px;font-weight:800;text-align:right}
+  .gi .t{grid-column:1/-1;font-size:13px;line-height:1.4}
+  .ok{color:#4ade80} .wa{color:#fde047} .bd{color:#fca5a5}
+  .bicp{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .bicp label{font-size:11px;color:var(--mut);display:flex;flex-direction:column;gap:4px}
+  .bicp input{width:100%;padding:9px;border-radius:10px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:17px;font-weight:700;text-align:center}
+  .fac{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;height:42px}
+  .fac button{flex:1;border:0;background:#0b1220;color:var(--mut);font-size:15px;font-weight:700}
+  .fac button.on{background:var(--in);color:#111}
+  .alerts{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+  .al{padding:8px 10px;border-radius:10px;font-size:13px;line-height:1.35;font-weight:600}
+  .al.r{background:rgba(239,68,68,.18);color:#fca5a5}
+  .al.y{background:rgba(250,204,21,.15);color:#fde047}
+  .al.g{background:rgba(34,197,94,.13);color:#86efac}
+  .presc{margin-top:10px;padding:12px;border-radius:12px;background:#0b1220;line-height:1.5;font-size:14px}
+  .presc .big{font-size:26px;font-weight:800;color:var(--in)}
+  .presc small{color:var(--mut)}
+
+  /* ---------- parâmetros ---------- */
   #cfg{display:none;margin-top:12px;background:var(--card);border-radius:14px;padding:12px}
   #cfg.on{display:block}
   #cfg h2{font-size:14px;margin-bottom:8px}
@@ -97,7 +155,7 @@
   .p b{display:block;font-size:14px;margin-bottom:6px}
   .pg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
   .pg label{font-size:10px;color:var(--mut);display:flex;flex-direction:column;gap:3px}
-  .pg input,.pg select{width:100%;padding:7px 4px;border-radius:8px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:15px;text-align:center}
+  .pg input{width:100%;padding:7px 4px;border-radius:8px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:15px;text-align:center}
   .pb{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:12px;color:var(--mut)}
   .pb select{padding:5px;border-radius:8px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:13px}
   .btns{display:flex;gap:8px;margin-top:10px}
@@ -106,22 +164,20 @@
 </head>
 <body>
 <header>
-  <div class="top"><h1 id="ttl">DROGAS DE IOT</h1><button class="gear" id="gear">⚙ Parâmetros</button></div>
-  <div class="tabs"><button data-t="iot" class="on">IOT</button><button data-t="bic">BIC</button></div>
-  <div class="weight">
-    <button id="minus" aria-label="menos">−</button>
-    <div class="wbox"><input id="w" type="number" inputmode="decimal" min="3" max="250" step="1" placeholder="Peso real"><span>kg</span></div>
-    <button id="plus" aria-label="mais">+</button>
+  <div class="top"><h1 id="ttl">INTUBAÇÃO</h1><button class="gear" id="gear">⚙ Parâmetros</button></div>
+  <div class="pt">
+    <button class="st" id="minus" aria-label="menos 1 kg">−</button>
+    <div class="wbox"><input id="w" type="number" inputmode="decimal" min="3" max="250" step="1" placeholder="Peso"><span>kg</span></div>
+    <button class="st" id="plus" aria-label="mais 1 kg">+</button>
+    <button class="ptsum" id="ptSum"></button>
   </div>
-  <div class="warn" id="warn"></div>
-  <div class="ibw" id="ibwWrap">
-    <label class="tg"><input type="checkbox" id="useIbw"> Peso ideal (obeso)</label>
-    <div class="ibwrow" id="ibwRow" style="gap:8px;flex:1">
-      <div class="sx"><button data-s="M">M</button><button data-s="F">F</button></div>
-      <div class="alt"><input id="h" type="number" inputmode="decimal" min="120" max="220" placeholder="Altura"><span>cm</span></div>
-    </div>
+  <div id="stale"></div>
+  <div class="ptinfo" id="ptInfo"></div>
+  <div id="pp">
+    <div class="pprow"><span>Sexo</span><div class="sx"><button data-s="M">M</button><button data-s="F">F</button></div></div>
+    <div class="pprow"><span>Altura</span><div class="alt"><input id="h" type="number" inputmode="decimal" min="120" max="220" placeholder="Altura"><span>cm</span></div></div>
+    <button class="newpt" id="newPt">Novo paciente</button>
   </div>
-  <div class="ibwinfo" id="ibwInfo"></div>
 </header>
 
 <section id="cfg">
@@ -130,15 +186,17 @@
   <div class="btns"><button id="reset">Restaurar padrão</button><button id="close">Fechar</button></div>
 </section>
 
-<div id="tabIot">
-<main id="cards"></main>
-
-<p class="foot">Peso ideal (Devine): M = 50 + 0,91 × (altura − 152,4); F = 45,5 + 0,91 × (altura − 152,4). Quando ativado, as drogas marcadas "ideal" usam o menor valor entre peso ideal e peso real; as marcadas "real" seguem o peso real.<br>
-Concentrações padrão: fentanil 50 mcg/mL · midazolam 5 mg/mL (se diluir 15 mg em 15 mL, usar 1) · etomidato 2 mg/mL · cetamina 50 mg/mL · succinilcolina 100 mg em 10 mL = 10 mg/mL · rocurônio 10 mg/mL.<br>
-Ferramenta de apoio; conferir dose antes de administrar.</p>
+<!-- ================= MÓDULO IOT ================= -->
+<div id="mod-iot" class="hide">
+  <label class="opt"><input type="checkbox" id="useIbw"><div>Calcular por peso ideal (obeso)<small id="ibwNote"></small></div></label>
+  <main id="cards"></main>
+  <p class="foot">Peso ideal (Devine): M = 50 + 0,91 × (altura − 152,4); F = 45,5 + 0,91 × (altura − 152,4). Quando ativado, as drogas marcadas "ideal" usam o menor valor entre peso ideal e peso real; as marcadas "real" seguem o peso real.<br>
+  Concentrações padrão: fentanil 50 mcg/mL · midazolam 5 mg/mL (se diluir 15 mg em 15 mL, usar 1) · etomidato 2 mg/mL · cetamina 50 mg/mL · succinilcolina 100 mg em 10 mL = 10 mg/mL · rocurônio 10 mg/mL.<br>
+  Ferramenta de apoio; conferir dose antes de administrar.</p>
 </div>
 
-<div id="tabBic" class="hide">
+<!-- ================= MÓDULO BIC ================= -->
+<div id="mod-bic" class="hide">
   <select class="bsel" id="bDrug"></select>
   <div class="box">
     <div class="dil">
@@ -160,8 +218,156 @@ Ferramenta de apoio; conferir dose antes de administrar.</p>
   Ferramenta de apoio; conferir com a prescrição e a programação da bomba.</p>
 </div>
 
+<!-- ================= MÓDULO GASO ================= -->
+<div id="mod-gas" class="hide">
+  <div class="box">
+    <div class="gin">
+      <label>pH<input id="g_ph" class="req" type="number" inputmode="decimal" step="any"></label>
+      <label>pCO₂ <i>mmHg</i><input id="g_pco2" class="req" type="number" inputmode="decimal" step="any"></label>
+      <label>HCO₃⁻ laudo <i>opcional</i><input id="g_hco3" type="number" inputmode="decimal" step="any"></label>
+    </div>
+    <div class="ghco3" id="gHco3"></div>
+    <div class="gsub">ÂNION GAP</div>
+    <div class="gin">
+      <label>Na⁺<input id="g_na" type="number" inputmode="decimal" step="any"></label>
+      <label>Cl⁻<input id="g_cl" type="number" inputmode="decimal" step="any"></label>
+      <label>Albumina <i>g/dL</i><input id="g_alb" type="number" inputmode="decimal" step="any"></label>
+    </div>
+    <div class="gsub">OUTROS (OPCIONAIS)</div>
+    <div class="gin g4">
+      <label>Lactato <i>mmol/L</i><input id="g_lac" type="number" inputmode="decimal" step="any"></label>
+      <label>K⁺<input id="g_k" type="number" inputmode="decimal" step="any"></label>
+      <label>pO₂ <i>mmHg</i><input id="g_po2" type="number" inputmode="decimal" step="any"></label>
+      <label>FiO₂ <i>%</i><input id="g_fio2" type="number" inputmode="decimal" step="any"></label>
+    </div>
+    <button class="gclr" id="gClr">Limpar gasometria</button>
+  </div>
+  <div class="box" id="gOut"></div>
+  <div class="box hide" id="gBic"></div>
+  <p class="foot">HCO₃⁻ calculado por Henderson-Hasselbalch (0,0307 × pCO₂ × 10^(pH − 6,1)). O laudo pode trazer o HCO₃⁻ <i>standard</i>, que é corrigido para pCO₂ 40 e difere do atual quando a pCO₂ está alterada.<br>
+  Compensações: Winter (pCO₂ = 1,5 × HCO₃⁻ + 8 ± 2); alcalose metabólica (pCO₂ = 0,7 × HCO₃⁻ + 21 ± 2); respiratória aguda/crônica (ΔHCO₃⁻ 0,1/0,35 por mmHg na acidose; 0,2/0,4 na alcalose). AG corrigido = AG + 2,5 × (4 − albumina).<br>
+  Ferramenta de apoio; interpretar junto com a clínica.</p>
+</div>
+
+<nav><div class="in" id="navIn"></div></nav>
+
 <script>
-const DEFAULT = [
+/* =====================================================================
+   NÚCLEO: armazenamento, utilitários, paciente, navegação
+   ===================================================================== */
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} },
+  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
+};
+const clone = o => JSON.parse(JSON.stringify(o));
+const $ = s => document.querySelector(s);
+const num = v => parseFloat(String(v).replace(",", "."));
+const fmt = n => (Math.round(n*10)/10).toLocaleString("pt-BR",{maximumFractionDigits:1});
+const fmtD = v => v.toLocaleString("pt-BR",{maximumFractionDigits: v < 0.1 ? 3 : v < 10 ? 2 : 1});
+const r1 = n => Math.round(n*10)/10;
+
+/* ---------- Paciente ---------- */
+const STALE_H = 4;   // horas até pedir confirmação dos dados
+const EMPTY_PT = {kg:null, sexo:null, h:null, ibwOn:false, ts:null};
+function loadPatient(){
+  const p = store.get("iot_patient");
+  if (p) return Object.assign(clone(EMPTY_PT), p);
+  // migração da versão anterior (ts = 0 força confirmação)
+  const kg = store.get("iot_last_kg"), ib = store.get("iot_ibw") || {}, sx = store.get("iot_sexo");
+  const h = num(ib.h);
+  const out = clone(EMPTY_PT);
+  if (kg) { out.kg = kg; out.ts = 0; }
+  if (h > 0) { out.h = h; out.sexo = sx || null; out.ibwOn = !!ib.on; }
+  ["iot_last_kg","iot_ibw","iot_sexo"].forEach(store.del);
+  return out;
+}
+let pt = loadPatient();
+function savePt(touch = true){ if (touch) pt.ts = Date.now(); store.set("iot_patient", pt); }
+const kgOk = () => pt.kg >= 3 && pt.kg <= 250;
+function ibw(){
+  if (!pt.sexo || !(pt.h >= 120 && pt.h <= 220)) return null;
+  return r1((pt.sexo === "M" ? 50 : 45.5) + 0.91 * (pt.h - 152.4));
+}
+function staleHours(){
+  if (pt.kg == null && pt.h == null) return 0;
+  if (!pt.ts) return Infinity;
+  const hrs = (Date.now() - pt.ts) / 3.6e6;
+  return hrs >= STALE_H ? hrs : 0;
+}
+
+const w = $("#w"), h = $("#h");
+function renderPatient(){
+  if (document.activeElement !== w) w.value = pt.kg ?? "";
+  if (document.activeElement !== h) h.value = pt.h ?? "";
+  document.querySelectorAll(".sx button").forEach(b => b.classList.toggle("on", b.dataset.s === pt.sexo));
+  $("#ptSum").innerHTML = `${pt.sexo || "Sexo"} · ${pt.h ? fmt(pt.h) : "—"}<small>${pt.h ? "cm" : "altura"} ${$("#pp").classList.contains("on") ? "▴" : "▾"}</small>`;
+  // aviso de dados antigos
+  const sh = staleHours();
+  $("#stale").innerHTML = sh ? `<div class="stale"><span>⚠ ${sh === Infinity ? "Dados de uso anterior" : `Dados de ${Math.floor(sh)} h atrás`}: mesmo paciente?</span><button id="ptOk">Confirmar</button></div>` : "";
+  // linha de informação
+  const inf = $("#ptInfo");
+  inf.classList.remove("warn");
+  if (w.value !== "" && !kgOk()) { inf.textContent = "Peso fora da faixa (3–250 kg)"; inf.classList.add("warn"); }
+  else if (ibw() != null) inf.textContent = `Peso ideal ${fmt(ibw())} kg`;
+  else inf.textContent = "";
+}
+w.addEventListener("input", () => { const v = num(w.value); pt.kg = isNaN(v) ? null : v; savePt(); renderAll(); });
+w.addEventListener("focus", () => w.select());
+h.addEventListener("input", () => { const v = num(h.value); pt.h = isNaN(v) ? null : v; savePt(); renderAll(); });
+document.querySelectorAll(".sx button").forEach(b => b.onclick = () => { pt.sexo = b.dataset.s; savePt(); renderAll(); });
+const step = n => { const kg = num(w.value) || 0; pt.kg = Math.max(3, Math.min(250, Math.round(kg + n))); savePt(); renderAll(); };
+$("#minus").onclick = () => step(-1);
+$("#plus").onclick  = () => step(+1);
+$("#ptSum").onclick = () => { $("#pp").classList.toggle("on"); renderPatient(); };
+$("#stale").addEventListener("click", e => { if (e.target.id === "ptOk") { savePt(); renderAll(); } });
+
+// Novo paciente: toque duplo para confirmar (sem diálogo do navegador)
+let armT = null;
+$("#newPt").onclick = () => {
+  const b = $("#newPt");
+  if (!b.classList.contains("arm")) {
+    b.classList.add("arm"); b.textContent = "Toque de novo para limpar os dados";
+    armT = setTimeout(() => { b.classList.remove("arm"); b.textContent = "Novo paciente"; }, 3000);
+    return;
+  }
+  clearTimeout(armT); b.classList.remove("arm"); b.textContent = "Novo paciente";
+  pt = clone(EMPTY_PT); store.set("iot_patient", pt);
+  MODULES.forEach(m => m.onNewPatient && m.onNewPatient());
+  $("#pp").classList.remove("on");
+  renderAll(); w.focus();
+};
+
+/* ---------- Módulos e navegação ----------
+   Para adicionar um módulo: criar <div id="mod-xxx">, e um objeto em MODULES com
+   id, label, title, render(), renderCfg(), resetCfg() e (opcional) onNewPatient(). */
+const MODULES = [];
+let route = "iot";
+function renderAll(){
+  renderPatient();
+  const m = MODULES.find(x => x.id === route);
+  if (m) m.render();
+}
+function setRoute(r){
+  if (!MODULES.some(m => m.id === r)) r = "iot";
+  route = r; store.set("iot_tab", r);
+  try { if (location.hash !== "#" + r) history.replaceState(null, "", "#" + r); } catch(e) {}
+  MODULES.forEach(m => $("#mod-" + m.id).classList.toggle("hide", m.id !== r));
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.r === r));
+  $("#ttl").textContent = MODULES.find(m => m.id === r).title;
+  $("#cfg").classList.remove("on");
+  window.scrollTo(0, 0);
+  renderAll();
+}
+window.addEventListener("hashchange", () => { const r = location.hash.slice(1); if (r && r !== route) setRoute(r); });
+$("#gear").onclick = () => { MODULES.find(m => m.id === route).renderCfg(); $("#cfg").classList.toggle("on"); };
+$("#close").onclick = () => $("#cfg").classList.remove("on");
+$("#reset").onclick = () => { const m = MODULES.find(m => m.id === route); m.resetCfg(); m.renderCfg(); renderAll(); };
+
+/* =====================================================================
+   MÓDULO IOT
+   ===================================================================== */
+const IOT_DEFAULT = [
   {id:"fen", grp:"ind", nome:"Fentanil",       min:2,   max:3,   un:"mcg", conc:50, teto:null, base:"ideal", obs:"Fazer 3 min antes da indução", cor:"var(--fen)"},
   {id:"mid", grp:"ind", nome:"Midazolam",      min:0.1, max:0.3, un:"mg",  conc:5,  teto:null, base:"ideal", obs:"Instável/idoso: usar dose mínima", cor:"var(--mid)"},
   {id:"eto", grp:"ind", nome:"Etomidato",      min:0.2, max:0.3, un:"mg",  conc:2,  teto:null, base:"ideal", obs:"Sem analgesia · mioclonia", cor:"var(--eto)"},
@@ -169,52 +375,27 @@ const DEFAULT = [
   {id:"suc", grp:"bnm", nome:"Succinilcolina", min:1,   max:1.5, un:"mg",  conc:10, teto:150,  base:"real",  obs:"CI: hiperK, HM, imobilidade >72 h", cor:"var(--suc)"},
   {id:"roc", grp:"bnm", nome:"Rocurônio",      min:1,   max:1.2, un:"mg",  conc:10, teto:null, base:"ideal", obs:"Se CI à succinilcolina · reversão: sugamadex 16 mg/kg", cor:"var(--roc)"}
 ];
-const store = {
-  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
-  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
-};
-const clone = o => JSON.parse(JSON.stringify(o));
-// carrega parâmetros salvos, mantendo drogas novas e herdando edições da versão anterior
-function loadParams(){
+function loadIot(){
   const saved = store.get("iot_params_v2") || store.get("iot_params") || [];
-  return DEFAULT.map(d => {
-    const s = saved.find(x => x.id === d.id);
-    if (!s) return clone(d);
-    const out = clone(d);
-    ["min","max","conc","teto","base"].forEach(k => { if (k in s) out[k] = s[k]; });
+  return IOT_DEFAULT.map(d => {
+    const s = saved.find(x => x.id === d.id), out = clone(d);
+    if (s) ["min","max","conc","teto","base"].forEach(k => { if (k in s) out[k] = s[k]; });
     return out;
   });
 }
-let P = loadParams();
-const save = () => store.set("iot_params_v2", P);
+let P = loadIot();
+const saveIot = () => store.set("iot_params_v2", P);
 
-const $ = s => document.querySelector(s);
-const w = $("#w"), h = $("#h"), useIbw = $("#useIbw");
-let sexo = store.get("iot_sexo") || "M";
-const num = v => parseFloat(String(v).replace(",", "."));
-const fmt = n => (Math.round(n*10)/10).toLocaleString("pt-BR",{maximumFractionDigits:1});
-const r1 = n => Math.round(n*10)/10;
-
-function ibw(){
-  const cm = num(h.value);
-  if (!(cm >= 120 && cm <= 220)) return null;
-  return r1((sexo === "M" ? 50 : 45.5) + 0.91 * (cm - 152.4));
-}
-
-function render(){
-  const kg = num(w.value);
-  const ok = kg >= 3 && kg <= 250;
-  $("#warn").textContent = (w.value !== "" && !ok) ? "Peso fora da faixa (3–250 kg)" : "";
-  $("#ibwRow").classList.toggle("on", useIbw.checked);
-  document.querySelectorAll(".sx button").forEach(b => b.classList.toggle("on", b.dataset.s === sexo));
-
-  const pi = useIbw.checked ? ibw() : null;
-  let info = "";
-  if (useIbw.checked) {
-    if (pi == null) info = "Informe a altura (120–220 cm)";
-    else info = `Peso ideal ${fmt(pi)} kg` + (ok && kg < pi ? " · real menor que o ideal: usando peso real" : "");
+function renderIot(){
+  const ok = kgOk(), kg = pt.kg;
+  $("#useIbw").checked = !!pt.ibwOn;
+  const pi = pt.ibwOn ? ibw() : null;
+  let note = "";
+  if (pt.ibwOn) {
+    if (pi == null) note = "Informe sexo e altura no topo (botão ▾)";
+    else note = `Peso ideal ${fmt(pi)} kg` + (ok && kg < pi ? " · real menor que o ideal: usando peso real" : "");
   }
-  $("#ibwInfo").textContent = info;
+  $("#ibwNote").textContent = note;
 
   let html = "", lastGrp = "";
   P.forEach(d => {
@@ -224,7 +405,7 @@ function render(){
     const dose = perKg => { let x = r1(peso * perKg); return d.teto ? Math.min(x, d.teto) : x; };
     const dm = ok ? dose(d.min) : null, dM = ok ? dose(d.max) : null;
     const v = x => x == null ? "—" : fmt(x);
-    const tag = useIbw.checked && pi != null && ok
+    const tag = pt.ibwOn && pi != null && ok
       ? `<span class="tag">${usaIdeal ? "peso ideal " + fmt(peso) : "peso real " + fmt(kg)} kg</span>` : "";
     html += `<div class="card" style="--c:${d.cor}">
       <div class="ch"><b>${d.nome}</b><small>${fmt(d.min)}–${fmt(d.max)} ${d.un}/kg · ${fmt(d.conc)} ${d.un}/mL</small></div>
@@ -236,56 +417,40 @@ function render(){
     </div>`;
   });
   $("#cards").innerHTML = html;
-
-  if (ok) store.set("iot_last_kg", kg);
-  store.set("iot_ibw", {on: useIbw.checked, h: h.value});
-  store.set("iot_sexo", sexo);
 }
+$("#useIbw").addEventListener("change", e => { pt.ibwOn = e.target.checked; savePt(); renderAll(); });
 
-function renderCfg(){
+function renderCfgIot(){
   $("#cfgList").innerHTML = P.map((d,i) => `<div class="p"><b>${d.nome}</b><div class="pg">
-    <label>Mín/kg<input data-i="${i}" data-k="min" type="number" inputmode="decimal" step="any" value="${d.min}"></label>
-    <label>Máx/kg<input data-i="${i}" data-k="max" type="number" inputmode="decimal" step="any" value="${d.max}"></label>
-    <label>${d.un}/mL<input data-i="${i}" data-k="conc" type="number" inputmode="decimal" step="any" value="${d.conc}"></label>
-    <label>Teto ${d.un}<input data-i="${i}" data-k="teto" type="number" inputmode="decimal" step="any" value="${d.teto ?? ""}" placeholder="—"></label>
+    <label>Mín/kg<input data-mod="iot" data-i="${i}" data-k="min" type="number" inputmode="decimal" step="any" value="${d.min}"></label>
+    <label>Máx/kg<input data-mod="iot" data-i="${i}" data-k="max" type="number" inputmode="decimal" step="any" value="${d.max}"></label>
+    <label>${d.un}/mL<input data-mod="iot" data-i="${i}" data-k="conc" type="number" inputmode="decimal" step="any" value="${d.conc}"></label>
+    <label>Teto ${d.un}<input data-mod="iot" data-i="${i}" data-k="teto" type="number" inputmode="decimal" step="any" value="${d.teto ?? ""}" placeholder="—"></label>
   </div>
   <div class="pb">No obeso, calcular por
-    <select data-i="${i}" data-k="base"><option value="ideal"${d.base==="ideal"?" selected":""}>peso ideal</option><option value="real"${d.base==="real"?" selected":""}>peso real</option></select>
+    <select data-mod="iot" data-i="${i}" data-k="base"><option value="ideal"${d.base==="ideal"?" selected":""}>peso ideal</option><option value="real"${d.base==="real"?" selected":""}>peso real</option></select>
   </div></div>`).join("");
 }
-function onCfg(e){
-  const t = e.target, k = t.dataset.k; if (!k || t.dataset.i === undefined) return;
-  const d = P[+t.dataset.i];
+function cfgIot(t){
+  const k = t.dataset.k, d = P[+t.dataset.i];
   if (k === "base") d.base = t.value;
   else {
     const val = num(t.value);
     if (k === "teto") d.teto = (t.value === "" || !(val > 0)) ? null : val;
     else if (val > 0) d[k] = val; else return;
   }
-  save(); render();
+  saveIot(); renderAll();
 }
-$("#cfgList").addEventListener("input", onCfg);
-$("#cfgList").addEventListener("change", onCfg);
-$("#gear").onclick = () => { renderCfg(); $("#cfg").classList.toggle("on"); };
-$("#close").onclick = () => $("#cfg").classList.remove("on");
-$("#reset").onclick = () => { P = clone(DEFAULT); save(); renderCfg(); render(); };
 
-const step = n => { const kg = num(w.value) || 0; w.value = Math.max(3, Math.min(250, Math.round(kg + n))); render(); };
-$("#minus").onclick = () => step(-1);
-$("#plus").onclick  = () => step(+1);
-w.addEventListener("input", render);
-w.addEventListener("focus", () => w.select());
-h.addEventListener("input", render);
-useIbw.addEventListener("change", render);
-document.querySelectorAll(".sx button").forEach(b => b.onclick = () => { sexo = b.dataset.s; render(); });
+MODULES.push({id:"iot", label:"IOT", sub:"intubação", title:"INTUBAÇÃO",
+  render: renderIot, renderCfg: renderCfgIot,
+  resetCfg(){ P = clone(IOT_DEFAULT); saveIot(); }});
 
-const last = store.get("iot_last_kg"); if (last) w.value = last;
-const ib = store.get("iot_ibw"); if (ib) { useIbw.checked = !!ib.on; h.value = ib.h || ""; }
-render();
-
-// ================= ABA BIC =================
-// ampAmt/ampUnit = conteúdo de 1 ampola; ampVol = volume da ampola (mL); n = nº de ampolas; total = volume final (mL)
-// unit = unidade de titulação; min/max = faixa usual; alt = unidade equivalente exibida
+/* =====================================================================
+   MÓDULO BIC (infusão contínua)
+   ampAmt/ampUnit = conteúdo de 1 ampola; ampVol = volume da ampola (mL); n = nº de ampolas; total = volume final (mL)
+   unit = unidade de titulação; min/max = faixa usual; alt = unidade equivalente exibida
+   ===================================================================== */
 const BIC_DEFAULT = [
   {id:"nor", g:"Vasoativos", nome:"Noradrenalina", ampAmt:4,    ampUnit:"mg",  ampVol:4,   n:4,  total:250, unit:"mcg/kg/min", min:0.01, max:1,    alt:"mcg/min", obs:"Padrão: ampola de 4 mL com 4 mg de norepinefrina base (rótulo “hemitartarato 2 mg/mL” = 1 mg/mL de base). Se o rótulo indicar outra quantidade de base, ajuste em ⚙ Parâmetros."},
   {id:"adr", g:"Vasoativos", nome:"Adrenalina",    ampAmt:1,    ampUnit:"mg",  ampVol:1,   n:6,  total:100, unit:"mcg/kg/min", min:0.01, max:0.5,  alt:"mcg/min", obs:"Ampola 1 mg/mL."},
@@ -321,12 +486,8 @@ const saveSt = () => store.set("iot_bic_state", bSt);
 // unidade → {num: "mcg"|"mg"|"U", kg: bool, t: "min"|"h"}
 function pu(u){ const p = u.split("/"); return {num:p[0], kg:p.includes("kg"), t:p[p.length-1]}; }
 const toBase = {mcg:1, mg:1000, U:1};          // base: mcg (massa) ou U
-const fmtD = v => v.toLocaleString("pt-BR",{maximumFractionDigits: v < 0.1 ? 3 : v < 10 ? 2 : 1});
-// concentração em base/mL (mcg/mL ou U/mL)
-const concBase = d => (d.n * d.ampAmt * toBase[d.ampUnit]) / d.total;
-// mL/h → dose na unidade u
+const concBase = d => (d.n * d.ampAmt * toBase[d.ampUnit]) / d.total;   // mcg/mL ou U/mL
 function r2d(rate, d, u, kg){ const x = pu(u); let v = rate * concBase(d) / toBase[x.num]; if (x.kg) v /= kg; if (x.t === "min") v /= 60; return v; }
-// dose → mL/h
 function d2r(dose, d, u, kg){ const x = pu(u); let v = dose * toBase[x.num]; if (x.kg) v *= kg; if (x.t === "min") v *= 60; return v / concBase(d); }
 
 function initBicSelect(){
@@ -337,10 +498,11 @@ function initBicSelect(){
 }
 function renderBic(){
   const d = B.find(x => x.id === bSt.drug) || B[0];
-  $("#bN").value = d.n; $("#bTot").value = d.total;
+  if (document.activeElement !== $("#bN")) $("#bN").value = d.n;
+  if (document.activeElement !== $("#bTot")) $("#bTot").value = d.total;
   document.querySelectorAll(".mode button").forEach(b => b.classList.toggle("on", b.dataset.m === bSt.mode));
-  const kg = num(w.value), kgOk = kg >= 3 && kg <= 250;
-  const x = pu(d.unit), needKg = x.kg;
+  const kg = pt.kg, kOk = kgOk();
+  const needKg = pu(d.unit).kg;
   // concentração
   const drugVol = d.n * d.ampVol, dil = d.total - drugVol;
   const cb = concBase(d), cu = d.ampUnit === "U" ? "U" : (cb >= 1000 ? "mg" : "mcg");
@@ -350,8 +512,7 @@ function renderBic(){
   else c += ` · diluente ${fmtD(dil)} mL`;
   $("#bConc").innerHTML = c;
 
-  const inUnit = bSt.mode === "r2d" ? "mL/h" : d.unit;
-  $("#bInU").textContent = inUnit;
+  $("#bInU").textContent = bSt.mode === "r2d" ? "mL/h" : d.unit;
   const key = d.id + "_" + bSt.mode;
   if (document.activeElement !== $("#bIn")) $("#bIn").value = bSt.vals[key] ?? "";
   const val = num($("#bIn").value);
@@ -359,14 +520,13 @@ function renderBic(){
 
   let res = "", badge = "", dose = null;
   if (!valid) res = `<div class="alt">Ajuste a diluição</div>`;
-  else if (needKg && !kgOk) res = `<div class="alt">Digite o peso no topo</div>`;
+  else if (needKg && !kOk) res = `<div class="alt">Digite o peso no topo</div>`;
   else if (!(val >= 0) || $("#bIn").value === "") res = `<div class="alt">Digite ${bSt.mode === "r2d" ? "a vazão em mL/h" : "a dose em " + d.unit}</div>`;
   else {
-    if (bSt.mode === "r2d") { dose = r2d(val, d, d.unit, kg); res = `<span class="big">${fmtD(dose)}</span><span class="u">${d.unit}</span>`; }
-    else { dose = val; const r = d2r(val, d, d.unit, kg); res = `<span class="big">${fmtD(r)}</span><span class="u">mL/h</span>`; }
-    // unidade alternativa
-    const altU = d.alt && (!pu(d.alt).kg || kgOk) ? d.alt : "";
-    const rate = bSt.mode === "r2d" ? val : d2r(val, d, d.unit, kg);
+    let rate;
+    if (bSt.mode === "r2d") { rate = val; dose = r2d(val, d, d.unit, kg); res = `<span class="big">${fmtD(dose)}</span><span class="u">${d.unit}</span>`; }
+    else { dose = val; rate = d2r(val, d, d.unit, kg); res = `<span class="big">${fmtD(rate)}</span><span class="u">mL/h</span>`; }
+    const altU = d.alt && (!pu(d.alt).kg || kOk) ? d.alt : "";
     const alts = [];
     if (altU) alts.push(`= ${fmtD(r2d(rate, d, altU, kg))} ${altU}`);
     if (d.id === "pro") alts.push(`lipídio ≈ ${fmtD(rate * (d.ampAmt/d.ampVol) / 10 * 1.1 * 24)} kcal/dia`);
@@ -379,55 +539,290 @@ function renderBic(){
   $("#bRes").innerHTML = res;
   $("#bBadge").innerHTML = badge;
   let rng = `Faixa usual: <b>${fmtD(d.min)}–${fmtD(d.max)} ${d.unit}</b>`;
-  if (valid && (!needKg || kgOk)) rng += ` = <b>${fmtD(d2r(d.min, d, d.unit, kg))}–${fmtD(d2r(d.max, d, d.unit, kg))} mL/h</b>`;
+  if (valid && (!needKg || kOk)) rng += ` = <b>${fmtD(d2r(d.min, d, d.unit, kg))}–${fmtD(d2r(d.max, d, d.unit, kg))} mL/h</b>`;
   $("#bRng").innerHTML = rng + `<br>${d.obs}`;
 }
-$("#bDrug").addEventListener("change", e => { bSt.drug = e.target.value; saveSt(); renderBic(); });
-document.querySelectorAll(".mode button").forEach(b => b.onclick = () => { bSt.mode = b.dataset.m; saveSt(); renderBic(); });
-$("#bIn").addEventListener("input", e => { const d = B.find(x => x.id === bSt.drug); bSt.vals[d.id + "_" + bSt.mode] = e.target.value; saveSt(); renderBic(); });
+$("#bDrug").addEventListener("change", e => { bSt.drug = e.target.value; saveSt(); renderAll(); });
+document.querySelectorAll(".mode button").forEach(b => b.onclick = () => { bSt.mode = b.dataset.m; saveSt(); renderAll(); });
+$("#bIn").addEventListener("input", e => { bSt.vals[bSt.drug + "_" + bSt.mode] = e.target.value; saveSt(); renderAll(); });
 ["bN","bTot"].forEach(id => $("#"+id).addEventListener("input", e => {
   const d = B.find(x => x.id === bSt.drug), v = num(e.target.value);
-  if (v > 0) { d[id === "bN" ? "n" : "total"] = v; saveBic(); renderBic(); }
+  if (v > 0) { d[id === "bN" ? "n" : "total"] = v; saveBic(); renderAll(); }
 }));
-w.addEventListener("input", renderBic);
-["#plus","#minus"].forEach(s => $(s).addEventListener("click", renderBic));
 
-// parâmetros da aba BIC
 function renderCfgBic(){
   $("#cfgList").innerHTML = B.map((d,i) => `<div class="p"><b>${d.nome}</b><div class="pg">
-    <label>${d.ampUnit}/ampola<input data-b="${i}" data-k="ampAmt" type="number" inputmode="decimal" step="any" value="${d.ampAmt}"></label>
-    <label>mL/ampola<input data-b="${i}" data-k="ampVol" type="number" inputmode="decimal" step="any" value="${d.ampVol}"></label>
-    <label>Faixa mín<input data-b="${i}" data-k="min" type="number" inputmode="decimal" step="any" value="${d.min}"></label>
-    <label>Faixa máx<input data-b="${i}" data-k="max" type="number" inputmode="decimal" step="any" value="${d.max}"></label>
+    <label>${d.ampUnit}/ampola<input data-mod="bic" data-i="${i}" data-k="ampAmt" type="number" inputmode="decimal" step="any" value="${d.ampAmt}"></label>
+    <label>mL/ampola<input data-mod="bic" data-i="${i}" data-k="ampVol" type="number" inputmode="decimal" step="any" value="${d.ampVol}"></label>
+    <label>Faixa mín<input data-mod="bic" data-i="${i}" data-k="min" type="number" inputmode="decimal" step="any" value="${d.min}"></label>
+    <label>Faixa máx<input data-mod="bic" data-i="${i}" data-k="max" type="number" inputmode="decimal" step="any" value="${d.max}"></label>
   </div><div class="pb">Faixa em ${d.unit}</div></div>`).join("");
 }
-$("#cfgList").addEventListener("input", e => {
-  const t = e.target; if (!t.dataset.b) return;
+function cfgBic(t){
   const v = num(t.value); if (!(v > 0)) return;
-  B[+t.dataset.b][t.dataset.k] = v; saveBic(); renderBic();
-});
-
-// abas
-let tab = store.get("iot_tab") || "iot";
-function setTab(t){
-  tab = t; store.set("iot_tab", t);
-  document.querySelectorAll(".tabs button").forEach(b => b.classList.toggle("on", b.dataset.t === t));
-  $("#tabIot").classList.toggle("hide", t !== "iot");
-  $("#tabBic").classList.toggle("hide", t !== "bic");
-  $("#ibwWrap").classList.toggle("hide", t !== "iot");
-  $("#ibwInfo").classList.toggle("hide", t !== "iot");
-  $("#ttl").textContent = t === "iot" ? "DROGAS DE IOT" : "INFUSÃO CONTÍNUA";
-  $("#cfg").classList.remove("on");
-  if (t === "bic") renderBic();
+  B[+t.dataset.i][t.dataset.k] = v; saveBic(); renderAll();
 }
-document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => setTab(b.dataset.t));
-$("#gear").onclick = () => { tab === "iot" ? renderCfg() : renderCfgBic(); $("#cfg").classList.toggle("on"); };
-$("#reset").onclick = () => {
-  if (tab === "iot") { P = clone(DEFAULT); save(); renderCfg(); render(); }
-  else { B = clone(BIC_DEFAULT); saveBic(); renderCfgBic(); renderBic(); }
-};
+
+MODULES.push({id:"bic", label:"BIC", sub:"infusão", title:"INFUSÃO CONTÍNUA",
+  render: renderBic, renderCfg: renderCfgBic,
+  resetCfg(){ B = clone(BIC_DEFAULT); saveBic(); },
+  onNewPatient(){ bSt.vals = {}; saveSt(); }});
+
+/* =====================================================================
+   MÓDULO GASOMETRIA + BICARBONATO
+   ===================================================================== */
+const GAS_FIELDS = {ph:[6.5,8], pco2:[5,200], hco3:[1,60], na:[100,200], cl:[60,150], alb:[0.5,6.5], lac:[0,30], k:[1,10], po2:[10,700], fio2:[21,100]};
+const GAS_DEFAULT = {alvo:12, fator:0.3, frac:50, tempo:3, apres:1, final:150, agMax:12};
+let gCfg = Object.assign(clone(GAS_DEFAULT), store.get("iot_gas_cfg") || {});
+const saveGCfg = () => store.set("iot_gas_cfg", gCfg);
+let gv = store.get("iot_gas") || {};
+const saveGv = () => store.set("iot_gas", gv);
+
+// lê valores válidos (null se vazio/fora da faixa)
+function gval(k){ const v = num(gv[k]); const [a,b] = GAS_FIELDS[k]; return (v >= a && v <= b) ? v : null; }
+const f1 = v => v.toLocaleString("pt-BR",{maximumFractionDigits:1});
+const f2 = v => v.toLocaleString("pt-BR",{minimumFractionDigits:2, maximumFractionDigits:2});
+
+// núcleo de interpretação: recebe números, devolve objeto (testável isoladamente)
+function interpretGas(x){
+  const out = {items:[], disorders:[], head:"", cls:"g-nl"};
+  const ph = x.ph, pco2 = x.pco2;
+  const hco3 = 0.0307 * pco2 * Math.pow(10, ph - 6.1);
+  out.hco3 = hco3;
+  const acid = ph < 7.35, alk = ph > 7.45;
+  const mAc = hco3 < 22, mAlk = hco3 > 26, rAc = pco2 > 45, rAlk = pco2 < 35;
+  out.cls = acid ? "g-ac" : alk ? "g-al" : "g-nl";
+  const state = acid ? "Acidemia" : alk ? "Alcalemia" : "pH normal";
+
+  const add = (k, v, t, c) => out.items.push({k, v, t, c});
+  const D = s => out.disorders.push(s);
+
+  function chkMetAc(){
+    const e = 1.5 * hco3 + 8;
+    let t, c;
+    if (pco2 > e + 2) { t = "pCO₂ acima do esperado: acidose respiratória associada (compensação inadequada, fadiga ou hipoventilação)"; c = "bd"; D("acidose respiratória"); }
+    else if (pco2 < e - 2) { t = "pCO₂ abaixo do esperado: alcalose respiratória associada"; c = "wa"; D("alcalose respiratória"); }
+    else { t = "Compensação respiratória adequada"; c = "ok"; }
+    add("pCO₂ esperada (Winter)", `${f1(e-2)}–${f1(e+2)}`, t, c);
+  }
+  function chkMetAlk(){
+    const e = 0.7 * hco3 + 21;
+    let t, c;
+    if (pco2 > e + 2) { t = "pCO₂ acima do esperado: acidose respiratória associada"; c = "bd"; D("acidose respiratória"); }
+    else if (pco2 < e - 2) { t = "pCO₂ abaixo do esperado: alcalose respiratória associada"; c = "wa"; D("alcalose respiratória"); }
+    else { t = "Compensação respiratória adequada"; c = "ok"; }
+    add("pCO₂ esperada", `${f1(e-2)}–${f1(e+2)}`, t, c);
+  }
+  function chkRespAc(){
+    const d = pco2 - 40, a = 24 + 0.1*d, ch = 24 + 0.35*d;
+    let t, c = "ok";
+    if (hco3 < a - 2) { t = "HCO₃⁻ abaixo do esperado mesmo para quadro agudo: acidose metabólica associada"; c = "bd"; D("acidose metabólica"); }
+    else if (hco3 > ch + 2) { t = "HCO₃⁻ acima do esperado mesmo para quadro crônico: alcalose metabólica associada"; c = "wa"; D("alcalose metabólica"); }
+    else if (hco3 <= a + 2) t = "Compatível com quadro AGUDO";
+    else if (hco3 >= ch - 2) t = "Compatível com quadro CRÔNICO compensado";
+    else t = "Entre aguda e crônica: agudização de quadro crônico";
+    add("HCO₃⁻ esperado (aguda / crônica)", `${f1(a)} / ${f1(ch)}`, t, c);
+  }
+  function chkRespAlk(){
+    const d = 40 - pco2, a = 24 - 0.2*d, ch = 24 - 0.4*d;
+    let t, c = "ok";
+    if (hco3 > a + 2) { t = "HCO₃⁻ acima do esperado mesmo para quadro agudo: alcalose metabólica associada"; c = "wa"; D("alcalose metabólica"); }
+    else if (hco3 < ch - 2) { t = "HCO₃⁻ abaixo do esperado mesmo para quadro crônico: acidose metabólica associada"; c = "bd"; D("acidose metabólica"); }
+    else if (hco3 >= a - 2) t = "Compatível com quadro AGUDO";
+    else if (hco3 <= ch + 2) t = "Compatível com quadro CRÔNICO";
+    else t = "Entre aguda e crônica";
+    add("HCO₃⁻ esperado (aguda / crônica)", `${f1(a)} / ${f1(ch)}`, t, c);
+  }
+
+  // distúrbio primário
+  let prim = "";
+  if (acid) {
+    if (mAc && rAc) { prim = "Acidose mista: metabólica + respiratória"; D("acidose metabólica"); D("acidose respiratória");
+      add("pCO₂ esperada para o HCO₃⁻ (Winter)", `${f1(1.5*hco3+6)}–${f1(1.5*hco3+10)}`, "Ambos os componentes contribuem para a acidemia", "bd"); }
+    else if (mAc) { prim = "Acidose metabólica"; D("acidose metabólica"); chkMetAc(); }
+    else if (rAc) { prim = "Acidose respiratória"; D("acidose respiratória"); chkRespAc(); }
+    else prim = "Acidemia sem alteração de pCO₂/HCO₃⁻: conferir os valores";
+  } else if (alk) {
+    if (mAlk && rAlk) { prim = "Alcalose mista: metabólica + respiratória"; D("alcalose metabólica"); D("alcalose respiratória"); }
+    else if (mAlk) { prim = "Alcalose metabólica"; D("alcalose metabólica"); chkMetAlk(); }
+    else if (rAlk) { prim = "Alcalose respiratória"; D("alcalose respiratória"); chkRespAlk(); }
+    else prim = "Alcalemia sem alteração de pCO₂/HCO₃⁻: conferir os valores";
+  } else {
+    const leanAc = ph <= 7.40;
+    if (rAc && mAlk) { if (leanAc) { prim = "Acidose respiratória com HCO₃⁻ elevado"; D("acidose respiratória"); chkRespAc(); } else { prim = "Alcalose metabólica com pCO₂ elevada"; D("alcalose metabólica"); chkMetAlk(); } }
+    else if (rAlk && mAc) { if (leanAc) { prim = "Acidose metabólica com pCO₂ baixa"; D("acidose metabólica"); chkMetAc(); } else { prim = "Alcalose respiratória com HCO₃⁻ baixo"; D("alcalose respiratória"); chkRespAlk(); } }
+    else if (mAc) { prim = "HCO₃⁻ baixo com pH normal"; D("acidose metabólica"); chkMetAc(); }
+    else if (mAlk) { prim = "HCO₃⁻ alto com pH normal"; D("alcalose metabólica"); chkMetAlk(); }
+    else if (rAc) { prim = "pCO₂ alta com pH normal"; D("acidose respiratória"); chkRespAc(); }
+    else if (rAlk) { prim = "pCO₂ baixa com pH normal"; D("alcalose respiratória"); chkRespAlk(); }
+    else prim = "pH, pCO₂ e HCO₃⁻ normais";
+  }
+
+  // ânion gap
+  out.agHigh = false; out.nagma = false;
+  if (x.na != null && x.cl != null) {
+    const ag = x.na - x.cl - hco3;
+    const alb = x.alb != null ? x.alb : 4;
+    const agc = ag + 2.5 * (4 - alb);
+    out.agc = agc;
+    const lim = x.agMax || 12;
+    let t, c;
+    const albTxt = x.alb != null ? `corrigido pela albumina ${f1(x.alb)}` : "albumina não informada: assumida 4,0";
+    if (agc > lim + 2) {
+      out.agHigh = true; c = "bd";
+      t = `AG elevado (${albTxt}): acidose metabólica com AG aumentado`;
+      if (out.disorders.includes("acidose metabólica")) out.disorders = out.disorders.map(d => d === "acidose metabólica" ? "acidose metabólica com AG elevado" : d);
+      else D("acidose metabólica com AG elevado (mascarada)");
+      add("Ânion gap", f1(agc), t, c);
+      // delta-delta
+      const dAG = agc - lim, hcorr = hco3 + dAG;
+      const dH = 24 - hco3;
+      let tt, cc = "ok";
+      if (hcorr > 26) { tt = "HCO₃⁻ corrigido > 26: alcalose metabólica associada"; cc = "wa"; D("alcalose metabólica"); }
+      else if (hcorr < 22) { tt = "HCO₃⁻ corrigido < 22: acidose hiperclorêmica (AG normal) associada"; cc = "bd"; D("acidose hiperclorêmica associada"); }
+      else tt = "Acidose com AG elevado isolada";
+      const ratio = dH > 0.5 ? ` · Δ/Δ ${f1(dAG/dH)}` : "";
+      add("Delta-delta (HCO₃⁻ corrigido)", f1(hcorr) + ratio, tt, cc);
+    } else {
+      c = "ok"; t = agc > lim ? `AG limítrofe (${albTxt})` : `AG normal (${albTxt})`;
+      if (hco3 < 22 && out.disorders.some(d => d.startsWith("acidose metabólica"))) {
+        out.nagma = true; c = "wa";
+        t = `AG normal (${albTxt}): acidose hiperclorêmica (perda de HCO₃⁻ GI/renal, ATR, excesso de SF 0,9%)`;
+        out.disorders = out.disorders.map(d => d === "acidose metabólica" ? "acidose metabólica hiperclorêmica" : d);
+      }
+      add("Ânion gap", f1(agc), t, c);
+    }
+    if (x.lac != null && x.lac > 4 && !out.agHigh && x.alb == null)
+      add("Atenção", "", "Lactato elevado com AG normal: dosar albumina (a hipoalbuminemia mascara o AG)", "wa");
+  } else add("Ânion gap", "—", "Informe Na⁺ e Cl⁻", "");
+
+  if (x.lac != null) {
+    const c = x.lac > 4 ? "bd" : x.lac > 2 ? "wa" : "ok";
+    add("Lactato", f1(x.lac), x.lac > 4 ? "Hiperlactatemia importante (> 4)" : x.lac > 2 ? "Hiperlactatemia (> 2)" : "Normal", c);
+  }
+  if (x.po2 != null && x.fio2 != null) {
+    const pf = x.po2 / (x.fio2/100);
+    const t = pf > 300 ? "Normal (> 300)" : pf > 200 ? "Hipoxemia leve (200–300)" : pf > 100 ? "Hipoxemia moderada (100–200)" : "Hipoxemia grave (≤ 100)";
+    add("Relação P/F", Math.round(pf), t + (pf <= 300 ? " · critério de SDRA exige PEEP ≥ 5" : ""), pf > 300 ? "ok" : pf > 200 ? "wa" : "bd");
+  }
+
+  // cabeçalho final
+  const uniq = [...new Set(out.disorders)];
+  out.head = `${state} · ${prim}`;
+  out.summary = uniq.length > 1 ? "Distúrbio misto: " + uniq.join(" + ") : (uniq[0] ? uniq[0][0].toUpperCase() + uniq[0].slice(1) : "");
+  return out;
+}
+
+function gasInputs(){
+  const x = {};
+  Object.keys(GAS_FIELDS).forEach(k => x[k] = gval(k));
+  x.agMax = gCfg.agMax;
+  return x;
+}
+function renderGas(){
+  Object.keys(GAS_FIELDS).forEach(k => {
+    const el = $("#g_" + k);
+    if (document.activeElement !== el) el.value = gv[k] ?? "";
+    el.classList.toggle("bad", el.value !== "" && gval(k) == null);
+  });
+  const x = gasInputs();
+  const out = $("#gOut"), bic = $("#gBic");
+  if (x.ph == null || x.pco2 == null) {
+    $("#gHco3").innerHTML = "";
+    out.innerHTML = `<div class="ghead g-nl" style="color:var(--mut);background:#0b1220">Digite pH e pCO₂ para interpretar</div>`;
+    bic.classList.add("hide"); return;
+  }
+  const r = interpretGas(x);
+  let hh = `HCO₃⁻ calculado: <b>${f1(r.hco3)}</b> mEq/L`;
+  if (x.hco3 != null && Math.abs(x.hco3 - r.hco3) > 3)
+    hh += `<br><span class="wa">O laudo (${f1(x.hco3)}) difere do calculado; provável HCO₃⁻ standard. A interpretação usa o calculado.</span>`;
+  $("#gHco3").innerHTML = hh;
+  out.innerHTML = `<div class="ghead ${r.cls}">${r.head}${r.summary && r.disorders.length > 1 ? `<br><span style="font-weight:600;font-size:13px">${r.summary}</span>` : ""}</div>
+    <div class="gl">${r.items.map(i => `<div class="gi"><span class="k">${i.k}</span><span class="v">${i.v}</span>${i.t ? `<span class="t ${i.c||""}">${i.t}</span>` : ""}</div>`).join("")}</div>`;
+  renderBicarb(x, r);
+}
+
+// ---------- bicarbonato ----------
+function renderBicarb(x, r){
+  const bic = $("#gBic");
+  const metAc = r.disorders.some(d => d.startsWith("acidose metabólica"));
+  if (!metAc || !(r.hco3 < 22)) { bic.classList.add("hide"); return; }
+  bic.classList.remove("hide");
+  const al = [];
+  if (x.ph >= 7.2) al.push(["g", `pH ${f2(x.ph)} (≥ 7,2): em geral sem indicação de bicarbonato`]);
+  else al.push(["y", `pH ${f2(x.ph)} (< 7,2): critério de pH presente`]);
+  if (x.pco2 > 45) al.push(["r", `Hipercapnia (pCO₂ ${f1(x.pco2)}): corrigir a ventilação antes. O HCO₃⁻ gera CO₂ e, sem ventilação adequada, piora a acidose intracelular`]);
+  if (x.k != null && x.k < 3.5) al.push(["r", `K⁺ ${f1(x.k)}: repor antes, porque cai com a alcalinização`]);
+  else if (x.k == null) al.push(["y", "Informe o K⁺: ele cai com a alcalinização"]);
+  if (r.nagma) al.push(["g", "AG normal (perda de HCO₃⁻): é o cenário de maior benefício"]);
+  else if (r.agHigh) al.push(["y", "AG elevado (lática/cetoacidose): benefício incerto; tratar a causa. CAD: só se pH < 6,9. Com IRA, o BICAR-ICU sugere benefício (alvo pH ≥ 7,3)"]);
+  al.push(["y", "Ca²⁺ iônico cai com a correção; não infundir no mesmo acesso que cálcio ou catecolaminas"]);
+
+  const kg = pt.kg, ok = kgOk();
+  let calc = "";
+  if (!ok) calc = `<div class="presc"><small>Digite o peso no topo para calcular o déficit</small></div>`;
+  else if (gCfg.alvo <= r.hco3) calc = `<div class="presc"><small>HCO₃⁻ atual (${f1(r.hco3)}) já é ≥ alvo (${f1(gCfg.alvo)})</small></div>`;
+  else {
+    const def = gCfg.fator * kg * (gCfg.alvo - r.hco3);
+    const dose = def * gCfg.frac / 100;
+    const vBic = dose / gCfg.apres;                 // mL da apresentação
+    const vTot = dose / (gCfg.final / 1000);        // mL da solução final
+    const vDil = Math.max(0, vTot - vBic);
+    const rate = vTot / gCfg.tempo;
+    calc = `<div class="presc">
+      Déficit = ${f1(gCfg.fator)} × ${f1(kg)} kg × (${f1(gCfg.alvo)} − ${f1(r.hco3)}) = <b>${Math.round(def)} mEq</b><br>
+      1ª etapa (${f1(gCfg.frac)}%): <span class="big">${Math.round(dose)} mEq</span><br>
+      <b>NaHCO₃ ${gCfg.apres === 1 ? "8,4%" : f2(gCfg.apres) + " mEq/mL"} ${Math.round(vBic)} mL + SG 5% ${Math.round(vDil)} mL</b><br>
+      Total ${Math.round(vTot)} mL (${Math.round(gCfg.final)} mEq/L) EV em ${f1(gCfg.tempo)} h = <b>${f1(rate)} mL/h</b><br>
+      <small>Repetir gasometria, K⁺ e Ca²⁺ ao término e recalcular.</small></div>`;
+  }
+  bic.innerHTML = `<div class="gsub" style="margin-top:0">BICARBONATO DE SÓDIO</div>
+    <div class="alerts">${al.map(a => `<div class="al ${a[0]}">${a[1]}</div>`).join("")}</div>
+    <div class="bicp">
+      <label>Fator de distribuição<div class="fac">${[0.3,0.5].map(f => `<button data-f="${f}" class="${gCfg.fator===f?"on":""}">${f1(f)}</button>`).join("")}</div></label>
+      <label>HCO₃⁻ alvo<input id="gAlvo" type="number" inputmode="decimal" step="any" value="${gCfg.alvo}"></label>
+    </div>
+    <div style="font-size:11px;color:var(--mut);margin-top:4px">0,5 se a acidose for muito grave (HCO₃⁻ &lt; 10)</div>
+    ${calc}`;
+}
+$("#gBic").addEventListener("click", e => { const f = e.target.dataset.f; if (f) { gCfg.fator = +f; saveGCfg(); renderAll(); } });
+$("#gBic").addEventListener("change", e => { if (e.target.id === "gAlvo") { const v = num(e.target.value); if (v > 0 && v <= 30) { gCfg.alvo = v; saveGCfg(); } renderAll(); } });
+
+Object.keys(GAS_FIELDS).forEach(k => $("#g_" + k).addEventListener("input", e => { gv[k] = e.target.value; saveGv(); renderAll(); }));
+$("#gClr").onclick = () => { gv = {}; saveGv(); renderAll(); };
+
+function renderCfgGas(){
+  const f = [["alvo","HCO₃⁻ alvo (mEq/L)"],["frac","1ª etapa (% do déficit)"],["tempo","Tempo de infusão (h)"],["apres","Apresentação (mEq/mL) · 8,4% = 1"],["final","Solução final (mEq/L) · 150 = isotônica"],["agMax","Limite superior do AG"]];
+  $("#cfgList").innerHTML = `<div class="p"><b>Gasometria e bicarbonato</b><div class="pg" style="grid-template-columns:1fr 1fr">` +
+    f.map(([k,l]) => `<label>${l}<input data-mod="gas" data-k="${k}" type="number" inputmode="decimal" step="any" value="${gCfg[k]}"></label>`).join("") + `</div></div>`;
+}
+function cfgGas(t){ const v = num(t.value); if (!(v > 0)) return; gCfg[t.dataset.k] = v; saveGCfg(); renderAll(); }
+
+MODULES.push({id:"gas", label:"Gaso", sub:"ácido-base", title:"GASOMETRIA",
+  render: renderGas, renderCfg: renderCfgGas,
+  resetCfg(){ gCfg = clone(GAS_DEFAULT); saveGCfg(); },
+  onNewPatient(){ gv = {}; saveGv(); }});
+
+/* =====================================================================
+   INICIALIZAÇÃO
+   ===================================================================== */
+// parâmetros: um único listener, despacha pelo módulo
+function onCfg(e){
+  const t = e.target; if (!t.dataset.mod || !t.dataset.k) return;
+  if (t.dataset.mod === "iot") cfgIot(t); else if (t.dataset.mod === "bic") cfgBic(t); else if (t.dataset.mod === "gas") cfgGas(t);
+}
+$("#cfgList").addEventListener("input", onCfg);
+$("#cfgList").addEventListener("change", onCfg);
+
+try { history.scrollRestoration = "manual"; } catch(e) {}
+$("#navIn").innerHTML = MODULES.map(m => `<button data-r="${m.id}"><b>${m.label}</b>${m.sub}</button>`).join("");
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => setRoute(b.dataset.r));
 initBicSelect();
-setTab(tab);
+setRoute(location.hash.slice(1) || store.get("iot_tab") || "iot");
+
+// reavalia validade dos dados ao voltar para o app e a cada minuto
+document.addEventListener("visibilitychange", () => { if (!document.hidden) renderPatient(); });
+setInterval(renderPatient, 60000);
 
 // Offline: service worker (HTTPS ou localhost)
 try {
