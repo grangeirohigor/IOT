@@ -11,7 +11,7 @@
 <style>
   :root{
     --bg:#0f172a; --card:#1e293b; --line:#334155; --txt:#f1f5f9; --mut:#94a3b8;
-    --fen:#3b82f6; --mid:#a855f7; --eto:#f97316; --suc:#ef4444; --in:#facc15;
+    --fen:#3b82f6; --mid:#a855f7; --eto:#f97316; --cet:#14b8a6; --suc:#ef4444; --roc:#eab308; --in:#facc15;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
@@ -23,15 +23,31 @@
   .weight{display:flex;align-items:center;gap:8px}
   .weight button{width:52px;height:56px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-size:26px;font-weight:600}
   .wbox{flex:1;position:relative}
-  .wbox input{width:100%;height:56px;border-radius:12px;border:2px solid var(--in);background:#111827;color:var(--in);font-size:32px;font-weight:800;text-align:center;padding-right:34px}
+  .wbox input{width:100%;height:56px;border-radius:12px;border:2px solid var(--in);background:#111827;color:var(--in);font-size:32px;font-weight:800;text-align:center;padding-right:34px;-moz-appearance:textfield}
   .wbox input::-webkit-outer-spin-button,.wbox input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-  .wbox input{-moz-appearance:textfield}
   .wbox span{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:14px;font-weight:600}
-  .warn{color:#fca5a5;font-size:12px;text-align:center;margin-top:6px;min-height:0}
+  .warn{color:#fca5a5;font-size:12px;text-align:center;margin-top:6px}
+  /* peso ideal */
+  .ibw{display:flex;align-items:center;gap:8px;margin-top:8px}
+  .tg{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--mut);white-space:nowrap}
+  .tg input{width:18px;height:18px;accent-color:var(--in)}
+  .sx{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .sx button{background:#0b1220;color:var(--mut);border:0;padding:7px 11px;font-size:14px;font-weight:700}
+  .sx button.on{background:var(--in);color:#111}
+  .alt{position:relative;flex:1}
+  .alt input{width:100%;padding:7px 30px 7px 8px;border-radius:8px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:15px;text-align:center;-moz-appearance:textfield}
+  .alt input::-webkit-outer-spin-button,.alt input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .alt span{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:12px}
+  .ibwinfo{font-size:12px;color:var(--in);text-align:center;margin-top:6px}
+  .ibwrow{display:none}
+  .ibwrow.on{display:flex}
+  /* cards */
+  .sec{color:var(--mut);font-size:11px;letter-spacing:.1em;font-weight:700;margin:16px 2px -4px}
   .card{background:var(--card);border-radius:14px;margin-top:12px;overflow:hidden;border-left:6px solid var(--c)}
-  .ch{display:flex;justify-content:space-between;align-items:baseline;padding:10px 12px 4px}
-  .ch b{font-size:18px}
-  .ch small{color:var(--mut);font-size:12px}
+  .ch{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:10px 12px 4px}
+  .ch b{font-size:18px;white-space:nowrap}
+  .ch small{color:var(--mut);font-size:12px;text-align:right}
+  .tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;margin:0 12px 2px;background:rgba(250,204,21,.15);color:var(--in)}
   .row{display:grid;grid-template-columns:70px 1fr 1fr 44px;align-items:center;padding:6px 12px}
   .row .l{color:var(--mut);font-size:13px}
   .row .v{text-align:center;font-weight:700;font-size:20px}
@@ -50,7 +66,9 @@
   .p b{display:block;font-size:14px;margin-bottom:6px}
   .pg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
   .pg label{font-size:10px;color:var(--mut);display:flex;flex-direction:column;gap:3px}
-  .pg input{width:100%;padding:7px 4px;border-radius:8px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:15px;text-align:center}
+  .pg input,.pg select{width:100%;padding:7px 4px;border-radius:8px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:15px;text-align:center}
+  .pb{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:12px;color:var(--mut)}
+  .pb select{padding:5px;border-radius:8px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:13px}
   .btns{display:flex;gap:8px;margin-top:10px}
   .btns button{flex:1;padding:10px;border-radius:10px;border:1px solid var(--line);background:#0b1220;color:var(--txt);font-size:14px}
 </style>
@@ -60,10 +78,18 @@
   <div class="top"><h1>DROGAS DE IOT</h1><button class="gear" id="gear">⚙ Parâmetros</button></div>
   <div class="weight">
     <button id="minus" aria-label="menos">−</button>
-    <div class="wbox"><input id="w" type="number" inputmode="decimal" min="3" max="250" step="1" placeholder="Peso"><span>kg</span></div>
+    <div class="wbox"><input id="w" type="number" inputmode="decimal" min="3" max="250" step="1" placeholder="Peso real"><span>kg</span></div>
     <button id="plus" aria-label="mais">+</button>
   </div>
   <div class="warn" id="warn"></div>
+  <div class="ibw">
+    <label class="tg"><input type="checkbox" id="useIbw"> Peso ideal (obeso)</label>
+    <div class="ibwrow" id="ibwRow" style="gap:8px;flex:1">
+      <div class="sx"><button data-s="M">M</button><button data-s="F">F</button></div>
+      <div class="alt"><input id="h" type="number" inputmode="decimal" min="120" max="220" placeholder="Altura"><span>cm</span></div>
+    </div>
+  </div>
+  <div class="ibwinfo" id="ibwInfo"></div>
 </header>
 
 <section id="cfg">
@@ -74,45 +100,90 @@
 
 <main id="cards"></main>
 
-<p class="foot">Obeso: fentanil, midazolam e etomidato pelo peso ideal; succinilcolina pelo peso real.<br>
-Concentrações padrão: fentanil 50 mcg/mL · midazolam 5 mg/mL (se diluir 15 mg em 15 mL, usar 1) · etomidato 2 mg/mL · succinilcolina 100 mg em 10 mL = 10 mg/mL.<br>
+<p class="foot">Peso ideal (Devine): M = 50 + 0,91 × (altura − 152,4); F = 45,5 + 0,91 × (altura − 152,4). Quando ativado, as drogas marcadas "ideal" usam o menor valor entre peso ideal e peso real; as marcadas "real" seguem o peso real.<br>
+Concentrações padrão: fentanil 50 mcg/mL · midazolam 5 mg/mL (se diluir 15 mg em 15 mL, usar 1) · etomidato 2 mg/mL · cetamina 50 mg/mL · succinilcolina 100 mg em 10 mL = 10 mg/mL · rocurônio 10 mg/mL.<br>
 Ferramenta de apoio; conferir dose antes de administrar.</p>
 
 <script>
 const DEFAULT = [
-  {id:"fen", nome:"Fentanil",       min:2,   max:3,   un:"mcg", conc:50, teto:null, obs:"Fazer 3 min antes da indução", cor:"var(--fen)"},
-  {id:"mid", nome:"Midazolam",      min:0.1, max:0.3, un:"mg",  conc:5,  teto:null, obs:"Instável/idoso: usar dose mínima", cor:"var(--mid)"},
-  {id:"eto", nome:"Etomidato",      min:0.2, max:0.3, un:"mg",  conc:2,  teto:null, obs:"Sem analgesia · mioclonia", cor:"var(--eto)"},
-  {id:"suc", nome:"Succinilcolina", min:1,   max:1.5, un:"mg",  conc:10, teto:150,  obs:"CI: hiperK, HM, imobilidade >72 h", cor:"var(--suc)"}
+  {id:"fen", grp:"ind", nome:"Fentanil",       min:2,   max:3,   un:"mcg", conc:50, teto:null, base:"ideal", obs:"Fazer 3 min antes da indução", cor:"var(--fen)"},
+  {id:"mid", grp:"ind", nome:"Midazolam",      min:0.1, max:0.3, un:"mg",  conc:5,  teto:null, base:"ideal", obs:"Instável/idoso: usar dose mínima", cor:"var(--mid)"},
+  {id:"eto", grp:"ind", nome:"Etomidato",      min:0.2, max:0.3, un:"mg",  conc:2,  teto:null, base:"ideal", obs:"Sem analgesia · mioclonia", cor:"var(--eto)"},
+  {id:"cet", grp:"ind", nome:"Cetamina",       min:1,   max:2,   un:"mg",  conc:50, teto:null, base:"ideal", obs:"Racêmica. S-cetamina (Ketamin®): metade da dose · broncodilatadora", cor:"var(--cet)"},
+  {id:"suc", grp:"bnm", nome:"Succinilcolina", min:1,   max:1.5, un:"mg",  conc:10, teto:150,  base:"real",  obs:"CI: hiperK, HM, imobilidade >72 h", cor:"var(--suc)"},
+  {id:"roc", grp:"bnm", nome:"Rocurônio",      min:1,   max:1.2, un:"mg",  conc:10, teto:null, base:"ideal", obs:"Se CI à succinilcolina · reversão: sugamadex 16 mg/kg", cor:"var(--roc)"}
 ];
 const store = {
   get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
   set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
 };
-let P = store.get("iot_params") || JSON.parse(JSON.stringify(DEFAULT));
+const clone = o => JSON.parse(JSON.stringify(o));
+// carrega parâmetros salvos, mantendo drogas novas e herdando edições da versão anterior
+function loadParams(){
+  const saved = store.get("iot_params_v2") || store.get("iot_params") || [];
+  return DEFAULT.map(d => {
+    const s = saved.find(x => x.id === d.id);
+    if (!s) return clone(d);
+    const out = clone(d);
+    ["min","max","conc","teto","base"].forEach(k => { if (k in s) out[k] = s[k]; });
+    return out;
+  });
+}
+let P = loadParams();
+const save = () => store.set("iot_params_v2", P);
+
 const $ = s => document.querySelector(s);
-const w = $("#w");
+const w = $("#w"), h = $("#h"), useIbw = $("#useIbw");
+let sexo = store.get("iot_sexo") || "M";
+const num = v => parseFloat(String(v).replace(",", "."));
 const fmt = n => (Math.round(n*10)/10).toLocaleString("pt-BR",{maximumFractionDigits:1});
 const r1 = n => Math.round(n*10)/10;
 
-function dose(kg, perKg, teto){ let d = r1(kg*perKg); return (teto ? Math.min(d, teto) : d); }
+function ibw(){
+  const cm = num(h.value);
+  if (!(cm >= 120 && cm <= 220)) return null;
+  return r1((sexo === "M" ? 50 : 45.5) + 0.91 * (cm - 152.4));
+}
 
 function render(){
-  const kg = parseFloat(String(w.value).replace(",", "."));
+  const kg = num(w.value);
   const ok = kg >= 3 && kg <= 250;
   $("#warn").textContent = (w.value !== "" && !ok) ? "Peso fora da faixa (3–250 kg)" : "";
-  $("#cards").innerHTML = P.map(d => {
-    const dm = ok ? dose(kg,d.min,d.teto) : null, dM = ok ? dose(kg,d.max,d.teto) : null;
-    const v = x => x==null ? "—" : fmt(x);
-    return `<div class="card" style="--c:${d.cor}">
+  $("#ibwRow").classList.toggle("on", useIbw.checked);
+  document.querySelectorAll(".sx button").forEach(b => b.classList.toggle("on", b.dataset.s === sexo));
+
+  const pi = useIbw.checked ? ibw() : null;
+  let info = "";
+  if (useIbw.checked) {
+    if (pi == null) info = "Informe a altura (120–220 cm)";
+    else info = `Peso ideal ${fmt(pi)} kg` + (ok && kg < pi ? " · real menor que o ideal: usando peso real" : "");
+  }
+  $("#ibwInfo").textContent = info;
+
+  let html = "", lastGrp = "";
+  P.forEach(d => {
+    if (d.grp !== lastGrp) { html += `<div class="sec">${d.grp === "ind" ? "ANALGESIA / INDUÇÃO" : "BLOQUEIO NEUROMUSCULAR"}</div>`; lastGrp = d.grp; }
+    const usaIdeal = d.base === "ideal" && pi != null && ok;
+    const peso = ok ? (usaIdeal ? Math.min(pi, kg) : kg) : null;
+    const dose = perKg => { let x = r1(peso * perKg); return d.teto ? Math.min(x, d.teto) : x; };
+    const dm = ok ? dose(d.min) : null, dM = ok ? dose(d.max) : null;
+    const v = x => x == null ? "—" : fmt(x);
+    const tag = useIbw.checked && pi != null && ok
+      ? `<span class="tag">${usaIdeal ? "peso ideal " + fmt(peso) : "peso real " + fmt(kg)} kg</span>` : "";
+    html += `<div class="card" style="--c:${d.cor}">
       <div class="ch"><b>${d.nome}</b><small>${fmt(d.min)}–${fmt(d.max)} ${d.un}/kg · ${fmt(d.conc)} ${d.un}/mL</small></div>
+      ${tag}
       <div class="row hd"><span></span><span class="v">MÍN</span><span class="v">MÁX</span><span></span></div>
       <div class="row"><span class="l">Dose</span><span class="v">${v(dm)}</span><span class="v">${v(dM)}</span><span class="u">${d.un}</span></div>
-      <div class="row vol"><span class="l">Volume</span><span class="v">${v(ok?r1(dm/d.conc):null)}</span><span class="v">${v(ok?r1(dM/d.conc):null)}</span><span class="u">mL</span></div>
+      <div class="row vol"><span class="l">Volume</span><span class="v">${v(ok ? r1(dm/d.conc) : null)}</span><span class="v">${v(ok ? r1(dM/d.conc) : null)}</span><span class="u">mL</span></div>
       <div class="ob">${d.obs}${d.teto ? ` · teto ${fmt(d.teto)} ${d.un}` : ""}</div>
     </div>`;
-  }).join("");
+  });
+  $("#cards").innerHTML = html;
+
   if (ok) store.set("iot_last_kg", kg);
+  store.set("iot_ibw", {on: useIbw.checked, h: h.value});
+  store.set("iot_sexo", sexo);
 }
 
 function renderCfg(){
@@ -121,31 +192,42 @@ function renderCfg(){
     <label>Máx/kg<input data-i="${i}" data-k="max" type="number" inputmode="decimal" step="any" value="${d.max}"></label>
     <label>${d.un}/mL<input data-i="${i}" data-k="conc" type="number" inputmode="decimal" step="any" value="${d.conc}"></label>
     <label>Teto ${d.un}<input data-i="${i}" data-k="teto" type="number" inputmode="decimal" step="any" value="${d.teto ?? ""}" placeholder="—"></label>
+  </div>
+  <div class="pb">No obeso, calcular por
+    <select data-i="${i}" data-k="base"><option value="ideal"${d.base==="ideal"?" selected":""}>peso ideal</option><option value="real"${d.base==="real"?" selected":""}>peso real</option></select>
   </div></div>`).join("");
 }
-$("#cfgList").addEventListener("input", e => {
-  const t = e.target; if (!t.dataset.k) return;
-  const val = parseFloat(String(t.value).replace(",", "."));
-  const k = t.dataset.k, d = P[+t.dataset.i];
-  if (k === "teto") d.teto = (t.value === "" || !(val > 0)) ? null : val;
-  else if (val > 0) d[k] = val; else return;
-  store.set("iot_params", P); render();
-});
+function onCfg(e){
+  const t = e.target, k = t.dataset.k; if (!k) return;
+  const d = P[+t.dataset.i];
+  if (k === "base") d.base = t.value;
+  else {
+    const val = num(t.value);
+    if (k === "teto") d.teto = (t.value === "" || !(val > 0)) ? null : val;
+    else if (val > 0) d[k] = val; else return;
+  }
+  save(); render();
+}
+$("#cfgList").addEventListener("input", onCfg);
+$("#cfgList").addEventListener("change", onCfg);
 $("#gear").onclick = () => { renderCfg(); $("#cfg").classList.toggle("on"); };
 $("#close").onclick = () => $("#cfg").classList.remove("on");
-$("#reset").onclick = () => { P = JSON.parse(JSON.stringify(DEFAULT)); store.set("iot_params", P); renderCfg(); render(); };
+$("#reset").onclick = () => { P = clone(DEFAULT); save(); renderCfg(); render(); };
 
-const step = n => { const kg = parseFloat(String(w.value).replace(",", ".")) || 0; w.value = Math.max(3, Math.min(250, Math.round(kg + n))); render(); };
+const step = n => { const kg = num(w.value) || 0; w.value = Math.max(3, Math.min(250, Math.round(kg + n))); render(); };
 $("#minus").onclick = () => step(-1);
 $("#plus").onclick  = () => step(+1);
 w.addEventListener("input", render);
 w.addEventListener("focus", () => w.select());
+h.addEventListener("input", render);
+useIbw.addEventListener("change", render);
+document.querySelectorAll(".sx button").forEach(b => b.onclick = () => { sexo = b.dataset.s; render(); });
 
-const last = store.get("iot_last_kg");
-if (last) w.value = last;
+const last = store.get("iot_last_kg"); if (last) w.value = last;
+const ib = store.get("iot_ibw"); if (ib) { useIbw.checked = !!ib.on; h.value = ib.h || ""; }
 render();
 
-// Offline (só funciona quando hospedado como PWA; ignorado em ambientes que bloqueiam service worker)
+// Offline: service worker (HTTPS ou localhost)
 try {
   if ("serviceWorker" in navigator && (location.protocol === "https:" || ["localhost","127.0.0.1"].includes(location.hostname))) {
     navigator.serviceWorker.register("sw.js").catch(() => {});

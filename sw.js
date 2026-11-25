@@ -1,5 +1,5 @@
-// Cache para uso offline. Ao alterar qualquer arquivo, troque a versão (iot-v2 -> iot-v3).
-const CACHE = "iot-v2";
+// Cache para uso offline. Ao alterar qualquer arquivo, troque a versão (iot-v3 -> iot-v4).
+const CACHE = "iot-v3";
 const ASSETS = [
   "./",
   "index.html",
